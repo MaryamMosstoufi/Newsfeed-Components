@@ -52,7 +52,6 @@ function menuMaker(data) {
     menu.classList.toggle("menu--open");
   });
 
-  console.log(menu);
   return menu;
 };
 

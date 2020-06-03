@@ -120,7 +120,7 @@ const data = [
 
   Step 5: Add a new article to the array. Make sure it is in the same format as the others. Refresh the page to see the new article.
 */
-
+// Article Maker
 function articleMaker(data) {
   const article = document.createElement('div');
   article.classList.add('article');
@@ -171,3 +171,86 @@ let newArticle = data.map((arrayItem) => {
 
   articleList.appendChild(newArticle);
 });
+
+// Stretch: Article Input
+function articleBuilder() {
+  const articleForm = document.createElement('form');
+  articleForm.classList.add('article-form');
+  const body = document.querySelector('body');
+  body.appendChild(articleForm);
+
+  // Form Title
+  const formTitle = document.createElement('h2');
+  formTitle.textContent = "New Article";
+  articleForm.appendChild(formTitle);
+
+  // Article Title
+  const titleField = document.createElement('input');
+  titleField.setAttribute('type', 'text');
+  titleField.setAttribute('placeholder', 'Title');
+  articleForm.appendChild(titleField);
+
+  // Article Date
+  const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  let dateObj = new Date();
+  let month = monthNames[dateObj.getMonth()];
+  let day = String(dateObj.getDate());
+  let nth;
+  if (day > 3 && day < 21) {
+    nth = 'th';
+  } else if ((day % 10) === 1) {
+    nth = "st";
+  } else if ((day % 10) === 2) {
+    nth = "nd";
+  } else if ((day % 10) === 3) {
+    nth = "rd";
+  } else {
+    nth = "th";
+  };
+  let year = dateObj.getFullYear();
+  const dateField = month + ' ' + day + nth + ', ' + year;
+
+  // Article Paragraphs
+  const paragraphOneField = document.createElement('textarea');
+  paragraphOneField.setAttribute('type', 'text');
+  paragraphOneField.setAttribute('placeholder', 'Paragraph One');
+  articleForm.appendChild(paragraphOneField);
+
+  const paragraphTwoField = document.createElement('textarea');
+  paragraphTwoField.setAttribute('type', 'text');
+  paragraphTwoField.setAttribute('placeholder', 'Paragraph Two');
+  articleForm.appendChild(paragraphTwoField);
+
+  const paragraphThreeField = document.createElement('textarea');
+  paragraphThreeField.setAttribute('type', 'text');
+  paragraphThreeField.setAttribute('placeholder', 'Paragraph Three');
+  articleForm.appendChild(paragraphThreeField);
+
+  // Article Submit Button 
+
+  const submitButton = document.createElement('button');
+  submitButton.textContent = 'Add Article';
+  submitButton.setAttribute('type', 'submit');
+  articleForm.appendChild(submitButton);
+
+  submitButton.addEventListener('click', (event) => {
+    event.preventDefault();
+    let addedArticle = {
+      'title': titleField.value,
+      'date': dateField,
+      'firstParagraph': paragraphOneField.value,
+      'secondParagraph': paragraphTwoField.value,
+      'thirdParagraph': paragraphThreeField.value
+    };
+    // console.log(addedArticle);
+    data.push(addedArticle);
+    let newAddedArticle = articleMaker(addedArticle);
+    let articleList = document.querySelector('.articles');
+    articleList.appendChild(newAddedArticle);
+    console.log(newAddedArticle)
+  });
+};
+
+articleBuilder();
+
